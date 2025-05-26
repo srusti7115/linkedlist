@@ -174,6 +174,50 @@ public class firstposadd {
         prev.next = prev.next.next;
         return;
      }
+     // slow first linked list
+     public Node findMid(Node head){
+        Node slow = head;
+        Node fast = head;
+
+
+        while( fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;// slow is my middle node
+
+     }
+     public boolean checkpalindrome(){
+        if(head == null || head.next == null){
+            return true;
+        }
+        // find mid
+        Node midNode = findMid(head);
+        // reverse 2nd half
+        Node prev = null;
+        Node curr = midNode;
+        Node next;
+        
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+       Node right = prev; // right half ka head
+       Node left = head;
+
+
+        //check left half and right half
+        while(right != null){
+            if(left .data != right.data){
+                return false;
+            }
+            left = left.next;
+            right = right.next;
+        }
+        return true;
+     }
 
      
 
@@ -209,6 +253,8 @@ public class firstposadd {
       li.print();
       li.removeNthnodeEnd(2);
       li.print();
+      System.out.println(li.checkpalindrome());
+
 
 
 

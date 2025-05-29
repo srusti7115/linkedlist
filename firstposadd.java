@@ -218,7 +218,168 @@ public class firstposadd {
         }
         return true;
      }
+     public static boolean isCycle(){
+        // Floy's Cycle Finding Algorithm
+     Node slow = head;
+     Node fast = head;
 
+     while(fast != null && fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow == fast){
+            return true;
+        }
+     }
+     return false;
+
+     }
+
+     public static void removeCycle(){
+        // detect cycle
+        Node slow = head;
+        Node fast = head;
+       boolean cycle = false;
+
+        while(fast != null && fast.next != null ){
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if(slow == fast){
+                cycle = true; 
+                break;
+                
+                    
+                }
+            }
+            if(cycle == false){
+                return;
+            }
+
+            //finding meeting point
+            slow = head;
+            Node prev = null;
+            while( slow != fast){
+                 prev = fast;
+                 slow = slow.next;
+                 fast = fast.next;
+            }
+
+        //remove cycle -> prev.next = null
+        prev.next = null;
+        }
+         private Node getMid(Node head){
+                 Node slow = head;
+                Node fast = head.next;
+
+
+        while( fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;// slow is my middle node
+
+
+
+            }
+
+            
+        private Node merge(Node head1, Node head2){
+            Node mergedll = new Node(-1);
+            Node temp = mergedll;
+
+            while(head1 != null && head2 != null){
+                if(head1.data <= head2.data){
+                    temp.next = head1;
+                    head1 = head1.next;
+                    temp = temp.next;
+                }else{
+                     temp.next = head2;
+                    head2 = head2.next;
+                    temp = temp.next;
+
+                }
+            }
+            while(head1 != null){
+                temp.next = head1;
+                    head1 = head1.next;
+                    temp = temp.next;
+
+            }
+            while(head2 != null){
+                  temp.next = head2;
+                    head2 = head2.next;
+                    temp = temp.next;
+
+            }
+            return mergedll.next;
+            
+
+        }
+
+
+        public Node mergesort(Node head){
+
+           
+            if(head == null || head.next == null){
+                return head;
+            }
+            //find mid
+            Node mid  = getMid(head);
+            //left-> right merge sort
+            Node righthead = mid.next;
+            mid.next = null;
+            Node newleft = mergesort(head);
+            Node newright = mergesort(righthead);
+            //merge
+            return merge(newleft, newright);
+        }
+
+        //zigzag question
+        public void zigzag(){
+            // to find middle
+            Node slow = head;
+            Node fast = head.next;
+            while(fast != null && fast.next != null){
+                slow = slow.next;
+                fast = fast.next.next;
+               
+            } 
+            Node mid = slow;
+
+
+            //reverse 2nd half
+         Node curr = mid.next;
+         mid.next = null;
+         Node prev = null;
+         Node next;
+
+         while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+         }
+         Node left = head;
+         Node right = prev;
+         Node nextL , nextR;
+
+
+            // alternate merge
+            while(left != null && right != null){
+                nextL = left.next;
+                left.next = right;
+                nextR = right.next;
+                right.next = nextL;
+
+                //updation
+                left = nextL;
+                right = nextR;
+
+            } 
+        }
+        
+     
+    
      
 
      public void print(){
@@ -235,7 +396,7 @@ public class firstposadd {
         System.out.println("null");
      }
     public static void main(String[] args) {
-        firstposadd li = new firstposadd();
+       /*  firstposadd li = new firstposadd();
       li.addFirst(2);
       li.addFirst(1);
       li.addLast(3);
@@ -254,6 +415,28 @@ public class firstposadd {
       li.removeNthnodeEnd(2);
       li.print();
       System.out.println(li.checkpalindrome());
+      head = new Node(1);
+      Node temp = new Node(2);
+      head.next =  temp;
+      head.next.next = new Node(3);
+      head.next.next.next = temp;
+      // 1->2->3->1
+      System.out.println(isCycle());
+      removeCycle();
+      System.out.println(isCycle());*/
+      firstposadd li = new firstposadd();
+      li.addLast(1);
+      li.addLast(2);
+      li.addLast(3);
+      li.addLast(4);
+      li.addLast(5);
+      li.print();
+      li.zigzag();
+      li.print();
+      //li.head = li.mergesort(li.head);
+      //li.print();
+
+
 
 
 
